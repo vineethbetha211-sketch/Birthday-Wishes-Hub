@@ -34,9 +34,12 @@
 
             <div class="d-flex gap-2 mt-4">
                 <a class="btn btn-outline-info btn-sm" href="{{ url_for('friends.edit_friend', friend_id=friend.id) }}">Edit</a>
-                <form method="POST" action="{{ url_for('friends.delete_friend', friend_id=friend.id) }}" onsubmit="return confirm('Delete this friend and all related wishes/cards?')">
-                    {{ csrf_token() }}
-                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+
+                <form method="POST"
+                      action="{{ url_for('friends.delete_friend', friend_id=friend.id) }}"
+                      onsubmit="return confirm('Delete this friend and all related wishes/cards?')">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
             </div>
         </div>
