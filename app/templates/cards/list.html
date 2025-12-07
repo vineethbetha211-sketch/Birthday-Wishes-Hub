@@ -22,9 +22,12 @@
 
                 <div class="d-flex gap-2 mt-3">
                     <a class="btn btn-sm btn-outline-light" href="{{ url_for('group_cards.view_card', card_id=c.id) }}">Open</a>
-                    <form method="POST" action="{{ url_for('group_cards.delete_card', card_id=c.id) }}" onsubmit="return confirm('Delete this card?')">
-                        {{ csrf_token() }}
-                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+
+                    <form method="POST"
+                          action="{{ url_for('group_cards.delete_card', card_id=c.id) }}"
+                          onsubmit="return confirm('Delete this card?')">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                     </form>
                 </div>
             </div>
