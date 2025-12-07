@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Create Group Card • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="glass-card p-4 p-lg-5">
+            <h1 class="h4 fw-bold mb-4">Create Group Card</h1>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    <label class="form-label">Select Friend</label>
+                    <select class="form-select" name="friend_id" required>
+                        {% for f in friends %}
+                            <option value="{{ f.id }}">{{ f.full_name }} ({{ f.birth_date.strftime("%Y-%m-%d") }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    {{ form.title.label(class="form-label") }}
+                    {{ form.title(class="form-control") }}
+                    {% for e in form.title.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.description.label(class="form-label") }}
+                    {{ form.description(class="form-control", rows="3") }}
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form.theme.label(class="form-label") }}
+                        {{ form.theme(class="form-select") }}
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check">
+                            {{ form.is_locked_until_bday(class="form-check-input") }}
+                            {{ form.is_locked_until_bday.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    {{ form.submit(class="btn btn-glow") }}
+                    <a class="btn btn-outline-light" href="{{ url_for('group_cards.list_cards') }}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

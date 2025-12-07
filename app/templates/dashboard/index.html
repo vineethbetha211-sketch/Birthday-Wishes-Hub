@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 fw-bold mb-1">Dashboard</h1>
+        <div class="text-soft">Your birthday command center</div>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-light" href="{{ url_for('friends.create_friend') }}">+ Add Friend</a>
+        <a class="btn btn-glow" href="{{ url_for('wishes.create_wish') }}">+ New Wish</a>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="stat-card glass-card p-4">
+            <div class="stat-label">Friends</div>
+            <div class="stat-value">{{ friends_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card glass-card p-4">
+            <div class="stat-label">Wishes</div>
+            <div class="stat-value">{{ wishes_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card glass-card p-4">
+            <div class="stat-label">Group Cards</div>
+            <div class="stat-value">{{ cards_count }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-6">
+        <div class="glass-card p-4">
+            <h5 class="fw-semibold mb-3">🎉 Today's birthdays</h5>
+            {% if todays %}
+                <ul class="list-group list-group-flush">
+                    {% for f in todays %}
+                    <li class="list-group-item bg-transparent text-light d-flex justify-content-between">
+                        <span>{{ f.full_name }}</span>
+                        <a class="btn btn-sm btn-outline-light" href="{{ url_for('friends.view_friend', friend_id=f.id) }}">Open</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="text-soft">No birthdays today.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="glass-card p-4">
+            <h5 class="fw-semibold mb-3">📅 Upcoming</h5>
+            {% if upcoming %}
+                <ul class="list-group list-group-flush">
+                    {% for f in upcoming %}
+                    <li class="list-group-item bg-transparent text-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-semibold">{{ f.full_name }}</div>
+                            <div class="small text-soft">In {{ f.days_until_birthday() }} day(s)</div>
+                        </div>
+                        <a class="btn btn-sm btn-outline-light" href="{{ url_for('friends.view_friend', friend_id=f.id) }}">View</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="text-soft">Add friends to see upcoming birthdays.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

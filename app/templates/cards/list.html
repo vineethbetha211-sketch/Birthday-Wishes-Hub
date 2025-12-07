@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Group Cards • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 fw-bold mb-1">Group Cards</h1>
+        <div class="text-soft">Collaborative birthday pages</div>
+    </div>
+    <a class="btn btn-glow" href="{{ url_for('group_cards.create_card') }}">+ New Group Card</a>
+</div>
+
+<div class="row g-3">
+    {% if cards %}
+        {% for c in cards %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100">
+                <div class="badge text-bg-secondary mb-2">{{ c.theme|title }}</div>
+                <h5 class="fw-semibold">{{ c.title }}</h5>
+                <div class="text-soft small">For {{ c.friend.full_name }}</div>
+                <div class="text-soft small mt-1">{{ c.contributions|length }} contributions</div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a class="btn btn-sm btn-outline-light" href="{{ url_for('group_cards.view_card', card_id=c.id) }}">Open</a>
+                    <form method="POST" action="{{ url_for('group_cards.delete_card', card_id=c.id) }}" onsubmit="return confirm('Delete this card?')">
+                        {{ csrf_token() }}
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="text-soft">No group cards yet. Create one to collect wishes from others.</div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

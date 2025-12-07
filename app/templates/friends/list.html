@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Friends • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 fw-bold mb-1">Friends</h1>
+        <div class="text-soft">Manage your birthday circle</div>
+    </div>
+    <a class="btn btn-glow" href="{{ url_for('friends.create_friend') }}">+ Add Friend</a>
+</div>
+
+<div class="glass-card p-3 p-lg-4">
+    {% if friends %}
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Relationship</th>
+                    <th>Birthday</th>
+                    <th>Next in</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in friends %}
+                <tr>
+                    <td>
+                        <div class="fw-semibold">{{ f.full_name }}</div>
+                        {% if f.nickname %}<div class="small text-soft">{{ f.nickname }}</div>{% endif %}
+                    </td>
+                    <td class="text-soft">{{ f.relationship or "—" }}</td>
+                    <td>{{ f.birth_date.strftime("%Y-%m-%d") }}</td>
+                    <td>{{ f.days_until_birthday() }} day(s)</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-light" href="{{ url_for('friends.view_friend', friend_id=f.id) }}">Open</a>
+                        <a class="btn btn-sm btn-outline-info" href="{{ url_for('friends.edit_friend', friend_id=f.id) }}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="text-soft">No friends yet. Add your first one!</div>
+    {% endif %}
+</div>
+{% endblock %}

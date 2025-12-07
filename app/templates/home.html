@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Welcome • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row align-items-center g-4">
+    <div class="col-lg-6">
+        <div class="p-4 p-lg-5 glass-card">
+            <h1 class="display-6 fw-bold mb-3">Make birthdays feel magical.</h1>
+            <p class="lead text-soft">
+                Create heartfelt wishes, schedule surprises, and build collaborative group cards 
+                with a clean cloud-style UI.
+            </p>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-glow btn-lg" href="{{ url_for('auth.register') }}">Get Started</a>
+                <a class="btn btn-outline-light btn-lg" href="{{ url_for('auth.login') }}">Sign In</a>
+            </div>
+
+            <hr class="border-light border-opacity-25 my-4">
+
+            <div class="row g-3 small">
+                <div class="col-md-6">
+                    <div class="feature-pill">✨ Surprise Reveal</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-pill">🕒 Time Capsule</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-pill">👥 Group Cards</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-pill">📅 Smart Dashboard</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="hero-illustration p-4 glass-card">
+            <div class="hero-bubble">
+                <div class="fw-semibold">Cloud UI</div>
+                <div class="text-muted small">Minimal • Fast • Beautiful</div>
+            </div>
+            <div class="hero-bubble">
+                <div class="fw-semibold">Share Links</div>
+                <div class="text-muted small">Perfect for teams</div>
+            </div>
+            <div class="hero-bubble">
+                <div class="fw-semibold">AWS-ready</div>
+                <div class="text-muted small">Gunicorn + Nginx</div>
+            </div>
+            <div class="hero-gradient"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

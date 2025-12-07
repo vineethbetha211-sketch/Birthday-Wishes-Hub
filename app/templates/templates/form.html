@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ "Create Template" if mode=="create" else "Edit Template" }} • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-card p-4 p-lg-5">
+            <h1 class="h4 fw-bold mb-4">
+                {{ "Create Template" if mode=="create" else "Edit Template" }}
+            </h1>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.title.label(class="form-label") }}
+                    {{ form.title(class="form-control") }}
+                    {% for e in form.title.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.tone.label(class="form-label") }}
+                    {{ form.tone(class="form-select") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.body.label(class="form-label") }}
+                    {{ form.body(class="form-control", rows="6") }}
+                    {% for e in form.body.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                </div>
+
+                <div class="d-flex gap-2">
+                    {{ form.submit(class="btn btn-glow") }}
+                    <a class="btn btn-outline-light" href="{{ url_for('templates.list_templates') }}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

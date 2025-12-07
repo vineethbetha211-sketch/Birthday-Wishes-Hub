@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Surprise Reveal • Birthday Wishes Hub{% endblock %}
+
+{% block head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="glass-card p-4 p-lg-5 text-center reveal-stage">
+            <div class="badge text-bg-secondary mb-3">{{ wish.tone|title }}</div>
+            <h1 class="display-6 fw-bold mb-2">🎁 A Surprise Wish</h1>
+            <div class="text-soft mb-4">
+                For <span class="fw-semibold">{{ wish.friend.full_name }}</span>
+            </div>
+
+            <div id="revealBox" class="reveal-box">
+                <div class="reveal-cover">
+                    <div class="h4 fw-semibold mb-1">Tap to reveal</div>
+                    <div class="text-soft small">
+                        {% if wish.is_time_capsule and not is_bday_today %}
+                            This time capsule unlocks on the birthday.
+                        {% else %}
+                            Confetti included ✨
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="reveal-content">
+                    {% if wish.image_url %}
+                        <img src="{{ wish.image_url }}" class="img-fluid rounded mb-3 wish-image" alt="wish image">
+                    {% endif %}
+
+                    {% if hide_body %}
+                        <div class="locked-panel mx-auto">
+                            <div class="h5 mb-1">🔒 Time Capsule Locked</div>
+                            <div class="text-soft">Come back on the birthday!</div>
+                        </div>
+                    {% else %}
+                        <div class="wish-body text-start">{{ wish.body }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="small text-soft mt-4">
+                Powered by Birthday Wishes Hub
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.BWH_REVEAL_ENABLED = {{ "false" if hide_body else "true" }};
+</script>
+{% endblock %}

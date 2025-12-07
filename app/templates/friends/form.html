@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ "Add Friend" if mode=="create" else "Edit Friend" }} • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-card p-4 p-lg-5">
+            <h1 class="h4 fw-bold mb-4">
+                {{ "Add a Friend" if mode=="create" else "Edit Friend" }}
+            </h1>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form.full_name.label(class="form-label") }}
+                        {{ form.full_name(class="form-control") }}
+                        {% for e in form.full_name.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.nickname.label(class="form-label") }}
+                        {{ form.nickname(class="form-control") }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.relationship.label(class="form-label") }}
+                        {{ form.relationship(class="form-control", placeholder="Best friend, colleague, sibling...") }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.timezone.label(class="form-label") }}
+                        {{ form.timezone(class="form-control", placeholder="Europe/Dublin") }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.birth_date.label(class="form-label") }}
+                        {{ form.birth_date(class="form-control") }}
+                        {% for e in form.birth_date.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.photo_url.label(class="form-label") }}
+                        {{ form.photo_url(class="form-control", placeholder="https://...") }}
+                        {% for e in form.photo_url.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        {{ form.notes.label(class="form-label") }}
+                        {{ form.notes(class="form-control", rows="4", placeholder="Add memories, inside jokes, or notes for personalized wishes...") }}
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    {{ form.submit(class="btn btn-glow") }}
+                    <a class="btn btn-outline-light" href="{{ url_for('friends.list_friends') }}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,210 @@
+:root{
+    --bg-1: #0b1020;
+    --bg-2: #101b3a;
+    --glass: rgba(255,255,255,0.06);
+    --glass-strong: rgba(255,255,255,0.10);
+    --border: rgba(255,255,255,0.12);
+    --text-soft: rgba(255,255,255,0.72);
+    --glow: 0 0 0.8rem rgba(130, 180, 255, 0.25), 0 0 2rem rgba(130, 180, 255, 0.15);
+}
+
+* { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+.bg-app{
+    min-height: 100vh;
+    background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(121, 153, 255, 0.12), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(255, 121, 200, 0.08), transparent 60%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    color: #f7f9ff;
+}
+
+.text-soft{ color: var(--text-soft) !important; }
+
+.glass-nav{
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    backdrop-filter: blur(12px);
+}
+
+.glass-card{
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    backdrop-filter: blur(14px);
+}
+
+.glass-subcard{
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.btn-glow{
+    background: linear-gradient(135deg, #7aa2ff, #9b7bff, #ff7bdc);
+    border: none;
+    color: #0b0f22;
+    font-weight: 700;
+    box-shadow: var(--glow);
+}
+.btn-glow:hover{ filter: brightness(1.05); }
+
+.feature-pill{
+    padding: 10px 12px;
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.hero-illustration{
+    position: relative;
+    min-height: 360px;
+    overflow: hidden;
+}
+.hero-bubble{
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    width: fit-content;
+    margin: 14px 0;
+}
+.hero-gradient{
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(122,162,255,0.25), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255,123,220,0.18), transparent 60%);
+    filter: blur(40px);
+    z-index: -1;
+}
+
+.stat-card .stat-label{
+    font-size: 0.9rem;
+    color: var(--text-soft);
+}
+.stat-card .stat-value{
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.mini-card{
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: 100%;
+}
+
+.avatar-circle{
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+.avatar-circle.sm{ width: 48px; height: 48px; }
+
+.avatar-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.avatar-initial{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.card-note{
+    background: rgba(255,255,255,0.06);
+    border: 1px dashed rgba(255,255,255,0.18);
+    border-radius: 12px;
+    padding: 12px 14px;
+    white-space: pre-wrap;
+}
+
+.wish-body{
+    font-size: 1.05rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+.wish-image{
+    max-height: 320px;
+    object-fit: cover;
+}
+
+.locked-panel{
+    background: rgba(255, 205, 106, 0.08);
+    border: 1px solid rgba(255, 205, 106, 0.35);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+}
+
+.contrib-card{
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.clamp-4{
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Reveal UI */
+.reveal-stage{ position: relative; }
+.reveal-box{
+    position: relative;
+    min-height: 220px;
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.reveal-cover{
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(122,162,255,0.22), transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(255,123,220,0.18), transparent 55%),
+        rgba(0,0,0,0.18);
+    backdrop-filter: blur(8px);
+    transition: opacity 0.25s ease;
+    z-index: 2;
+}
+
+.reveal-content{
+    padding: 28px;
+}
+
+.reveal-box.revealed .reveal-cover{
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Confetti canvas */
+#confettiCanvas{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Table tweaks */
+.table-dark{
+    --bs-table-bg: transparent;
+    --bs-table-border-color: rgba(255,255,255,0.08);
+}

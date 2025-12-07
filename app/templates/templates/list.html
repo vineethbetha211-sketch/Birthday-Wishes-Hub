@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Templates • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 fw-bold mb-1">Wish Templates</h1>
+        <div class="text-soft">Reusable messages for fast writing</div>
+    </div>
+    <a class="btn btn-glow" href="{{ url_for('templates.create_template') }}">+ New Template</a>
+</div>
+
+<div class="row g-3">
+    {% if items %}
+        {% for t in items %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100">
+                <div class="badge rounded-pill text-bg-secondary mb-2">{{ t.tone|title }}</div>
+                <h5 class="fw-semibold">{{ t.title }}</h5>
+                <div class="text-soft small clamp-4">{{ t.body }}</div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a class="btn btn-sm btn-outline-light" href="{{ url_for('wishes.create_wish', template=t.id) }}">Use</a>
+                    <a class="btn btn-sm btn-outline-info" href="{{ url_for('templates.edit_template', template_id=t.id) }}">Edit</a>
+                    <form method="POST" action="{{ url_for('templates.delete_template', template_id=t.id) }}" onsubmit="return confirm('Delete this template?')">
+                        {{ csrf_token() }}
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="text-soft">No templates yet. Create one to speed up your wishes.</div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

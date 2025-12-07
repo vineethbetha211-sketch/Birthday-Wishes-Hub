@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Not Found{% endblock %}
+{% block content %}
+<div class="glass-card p-5 text-center">
+    <h1 class="display-6 fw-bold">404</h1>
+    <div class="text-soft mb-3">We couldn't find that page.</div>
+    <a class="btn btn-outline-light" href="{{ url_for('auth.home') }}">Go Home</a>
+</div>
+{% endblock %}

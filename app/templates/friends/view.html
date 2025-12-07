@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}{{ friend.full_name }} • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="glass-card p-4">
+            <div class="d-flex align-items-center gap-3">
+                <div class="avatar-circle">
+                    {% if friend.photo_url %}
+                        <img src="{{ friend.photo_url }}" alt="photo" class="avatar-img">
+                    {% else %}
+                        <span class="avatar-initial">{{ friend.full_name[:1].upper() }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <h2 class="h5 fw-bold mb-0">{{ friend.full_name }}</h2>
+                    <div class="text-soft small">{{ friend.relationship or "Friend" }}</div>
+                </div>
+            </div>
+
+            <hr class="border-light border-opacity-25 my-3">
+
+            <div class="small text-soft">Birthday</div>
+            <div class="fw-semibold">{{ friend.birth_date.strftime("%Y-%m-%d") }}</div>
+
+            <div class="small text-soft mt-2">Next in</div>
+            <div class="fw-semibold">{{ friend.days_until_birthday() }} day(s)</div>
+
+            {% if friend.notes %}
+            <div class="small text-soft mt-3">Memories</div>
+            <div class="card-note">{{ friend.notes }}</div>
+            {% endif %}
+
+            <div class="d-flex gap-2 mt-4">
+                <a class="btn btn-outline-info btn-sm" href="{{ url_for('friends.edit_friend', friend_id=friend.id) }}">Edit</a>
+                <form method="POST" action="{{ url_for('friends.delete_friend', friend_id=friend.id) }}" onsubmit="return confirm('Delete this friend and all related wishes/cards?')">
+                    {{ csrf_token() }}
+                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <h3 class="h5 fw-semibold mb-0">Wishes & Cards</h3>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sm btn-glow" href="{{ url_for('wishes.create_wish') }}">+ New Wish</a>
+                <a class="btn btn-sm btn-outline-light" href="{{ url_for('group_cards.create_card') }}">+ Group Card</a>
+            </div>
+        </div>
+
+        <div class="glass-card p-4 mb-4">
+            <h5 class="fw-semibold">📝 Wishes</h5>
+            {% if wishes %}
+                <div class="row g-3 mt-2">
+                    {% for w in wishes %}
+                    <div class="col-md-6">
+                        <div class="mini-card">
+                            <div class="small text-soft">{{ w.tone|title }}</div>
+                            <div class="fw-semibold">{{ w.title }}</div>
+                            <div class="small text-soft mt-1">
+                                {% if w.is_time_capsule %}🕒 Time Capsule{% endif %}
+                                {% if w.scheduled_for %} • Scheduled{% endif %}
+                            </div>
+                            <div class="mt-2">
+                                <a class="btn btn-sm btn-outline-light" href="{{ url_for('wishes.view_wish', wish_id=w.id) }}">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-soft">No wishes yet for this friend.</div>
+            {% endif %}
+        </div>
+
+        <div class="glass-card p-4">
+            <h5 class="fw-semibold">👥 Group Cards</h5>
+            {% if cards %}
+                <div class="row g-3 mt-2">
+                    {% for c in cards %}
+                    <div class="col-md-6">
+                        <div class="mini-card">
+                            <div class="small text-soft">{{ c.theme|title }} Theme</div>
+                            <div class="fw-semibold">{{ c.title }}</div>
+                            <div class="small text-soft mt-1">
+                                {{ c.contributions|length }} contributions
+                            </div>
+                            <div class="mt-2">
+                                <a class="btn btn-sm btn-outline-light" href="{{ url_for('group_cards.view_card', card_id=c.id) }}">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-soft">No group cards yet for this friend.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

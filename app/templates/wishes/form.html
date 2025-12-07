@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ "Create Wish" if mode=="create" else "Edit Wish" }} • Birthday Wishes Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="glass-card p-4 p-lg-5">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                <h1 class="h4 fw-bold mb-0">
+                    {{ "Create Wish" if mode=="create" else "Edit Wish" }}
+                </h1>
+                <div class="small text-soft">
+                    Use templates to write faster from the Templates tab.
+                </div>
+            </div>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    <label class="form-label">Select Friend</label>
+                    <select class="form-select" name="friend_id" required>
+                        {% for f in friends %}
+                            {% set selected = "" %}
+                            {% if wish and wish.friend_id == f.id %}
+                                {% set selected = "selected" %}
+                            {% endif %}
+                            <option value="{{ f.id }}" {{ selected }}>{{ f.full_name }} ({{ f.birth_date.strftime("%Y-%m-%d") }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control") }}
+                        {% for e in form.title.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.tone.label(class="form-label") }}
+                        {{ form.tone(class="form-select") }}
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    {{ form.body.label(class="form-label") }}
+                    {{ form.body(class="form-control", rows="6", placeholder="Write something heartfelt...") }}
+                    {% for e in form.body.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                </div>
+
+                <div class="mt-3">
+                    {{ form.image_url.label(class="form-label") }}
+                    {{ form.image_url(class="form-control", placeholder="https://gif-or-image-url") }}
+                    {% for e in form.image_url.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+                </div>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.is_time_capsule(class="form-check-input") }}
+                            {{ form.is_time_capsule.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.scheduled_for.label(class="form-label") }}
+                        {{ form.scheduled_for(class="form-control") }}
+                        <div class="small text-soft">Leave empty for manual sending.</div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    {{ form.submit(class="btn btn-glow") }}
+                    <a class="btn btn-outline-light" href="{{ url_for('wishes.list_wishes') }}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
