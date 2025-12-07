@@ -22,9 +22,12 @@
                 <div class="d-flex gap-2 mt-3">
                     <a class="btn btn-sm btn-outline-light" href="{{ url_for('wishes.create_wish', template=t.id) }}">Use</a>
                     <a class="btn btn-sm btn-outline-info" href="{{ url_for('templates.edit_template', template_id=t.id) }}">Edit</a>
-                    <form method="POST" action="{{ url_for('templates.delete_template', template_id=t.id) }}" onsubmit="return confirm('Delete this template?')">
-                        {{ csrf_token() }}
-                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+
+                    <form method="POST"
+                          action="{{ url_for('templates.delete_template', template_id=t.id) }}"
+                          onsubmit="return confirm('Delete this template?')">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                     </form>
                 </div>
             </div>
