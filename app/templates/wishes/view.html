@@ -17,9 +17,12 @@
                 </div>
                 <div class="d-flex gap-2">
                     <a class="btn btn-sm btn-outline-info" href="{{ url_for('wishes.edit_wish', wish_id=wish.id) }}">Edit</a>
-                    <form method="POST" action="{{ url_for('wishes.delete_wish', wish_id=wish.id) }}" onsubmit="return confirm('Delete this wish?')">
-                        {{ csrf_token() }}
-                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+
+                    <form method="POST"
+                          action="{{ url_for('wishes.delete_wish', wish_id=wish.id) }}"
+                          onsubmit="return confirm('Delete this wish?')">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                     </form>
                 </div>
             </div>
@@ -46,8 +49,8 @@
 
                 {% if not wish.sent_at %}
                     <form method="POST" action="{{ url_for('wishes.mark_sent', wish_id=wish.id) }}">
-                        {{ csrf_token() }}
-                        <button class="btn btn-outline-light">Mark as Sent</button>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-outline-light">Mark as Sent</button>
                     </form>
                 {% else %}
                     <span class="badge text-bg-success align-self-center">Sent at {{ wish.sent_at.strftime("%Y-%m-%d %H:%M") }} UTC</span>
